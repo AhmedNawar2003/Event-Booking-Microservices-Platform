@@ -1,0 +1,42 @@
+#server:
+#  port: 8761
+#
+#spring:
+#  application:
+#    name: discovery-server
+#  config:
+#    import: optional:configserver:http://localhost:8888
+#  cloud:
+#    config:
+#      fail-fast: false
+#
+#eureka:
+#  instance:
+#    hostname: localhost
+#  client:
+#    register-with-eureka: false
+#    fetch-registry: false
+#  server:
+#    wait-time-in-ms-when-sync-empty: 0
+
+
+server:
+  port: 8761
+
+spring:
+  application:
+    name: discovery-server
+  config:
+    import: optional:configserver:http://${CONFIG_SERVER_URL:localhost}:8888
+  cloud:
+    config:
+      fail-fast: false
+
+eureka:
+  instance:
+    hostname: ${EUREKA_HOSTNAME:localhost}
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+  server:
+    wait-time-in-ms-when-sync-empty: 0

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to SmartEvent | Success</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .welcome-container {
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 3rem;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 550px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.7s ease-out forwards;
+        }
+
+        .icon-box {
+            background: linear-gradient(45deg, #4CAF50, #81c784);
+            color: white;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 40px;
+            margin: 0 auto 1.5rem auto;
+            box-shadow: 0 10px 20px rgba(76, 175, 80, 0.3);
+        }
+
+        h1 {
+            color: #2c3e50;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        #userName { color: #4CAF50; font-weight: 800; }
+
+        .sub-text {
+            color: #7f8c8d;
+            margin-bottom: 2.5rem;
+            font-size: 1.1rem;
+        }
+
+        .token-section {
+            background-color: #f8f9fa;
+            border: 1px solid #e1e4e8;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .token-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #636e72;
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .copy-btn {
+            background: #e8f5e9;
+            border: none;
+            color: #4CAF50;
+            padding: 6px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .copy-btn:hover { background: #c8e6c9; transform: scale(1.05); }
+
+        .token-body {
+            background-color: #ffffff;
+            color: #444;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.85rem;
+            padding: 15px;
+            border-radius: 10px;
+            word-break: break-all;
+            max-height: 120px;
+            overflow-y: auto;
+            border: 1px solid #dfe6e9;
+            line-height: 1.5;
+        }
+
+        .action-btn {
+            background: linear-gradient(45deg, #4CAF50, #388E3C);
+            color: white;
+            border: none;
+            padding: 16px 30px;
+            font-size: 1.1rem;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 8px 15px rgba(76, 175, 80, 0.2);
+        }
+
+        .action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 20px rgba(76, 175, 80, 0.3);
+            filter: brightness(1.1);
+        }
+
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Customize Scrollbar */
+        .token-body::-webkit-scrollbar { width: 6px; }
+        .token-body::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="welcome-container">
+    <div class="icon-box">
+        <i class="fas fa-shield-check"></i>
+    </div>
+
+    <h1>Welcome, <span id="userName">Explorer</span>! 👋</h1>
+    <p class="sub-text">You've successfully secured your session via Google.</p>
+
+    <div class="token-section">
+        <div class="token-header">
+            <span><i class="fas fa-lock"></i> Secure Access Token</span>
+            <button class="copy-btn" id="copyTokenBtn">
+                <i class="far fa-copy"></i> Copy
+            </button>
+        </div>
+        <div class="token-body" id="tokenDisplay">
+            Generating your secure token...
+        </div>
+    </div>
+
+    <a href="/dashboard.html" class="action-btn" id="dashboardBtn">
+        Go to Event Dashboard <i class="fas fa-chevron-right"></i>
+    </a>
+</div>
+
+<script>
+    // 1. استخراج البيانات من الـ URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get('token');
+    const name = urlParams.get('name');
+
+    // 2. تحديث واجهة المستخدم وحفظ البيانات
+    if (name) {
+        const decodedName = decodeURIComponent(name);
+        document.getElementById('userName').innerText = decodedName;
+
+        // تحديث لينك الزرار عشان ياخد الاسم معاه للـ Dashboard
+        const dashboardBtn = document.getElementById('dashboardBtn');
+        dashboardBtn.href = `/dashboard.html?name=${name}`;
+    }
+
+    if (token) {
+        document.getElementById('tokenDisplay').innerText = token;
+        // Enhancement: حفظ التوكن في الـ LocalStorage لاستخدامه لاحقاً في الـ API Calls
+        localStorage.setItem('accessToken', token);
+    } else {
+        document.getElementById('tokenDisplay').innerText = "Session token expired. Please login again.";
+        document.getElementById('tokenDisplay').style.color = "#e74c3c";
+    }
+
+    // 3. وظيفة زر النسخ المحسنة
+    document.getElementById('copyTokenBtn').addEventListener('click', () => {
+        const tokenText = document.getElementById('tokenDisplay').innerText;
+        if (token && tokenText !== "Session token expired. Please login again.") {
+            navigator.clipboard.writeText(tokenText).then(() => {
+                const btn = document.getElementById('copyTokenBtn');
+                btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                btn.style.background = '#c8e6c9';
+                setTimeout(() => {
+                    btn.innerHTML = '<i class="far fa-copy"></i> Copy';
+                    btn.style.background = '#e8f5e9';
+                }, 2000);
+            });
+        }
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,80 @@
+# ============ Maven ============
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+*.jar
+*.war
+*.ear
+
+# ============ IntelliJ IDEA ============
+.idea/
+*.iws
+*.iml
+*.ipr
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/gradle.xml
+.idea/assetWizardSettings.xml
+.idea/dictionaries
+.idea/libraries
+.idea/vcs.xml
+.idea/modules.xml
+*.xml
+
+# ============ Eclipse ============
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+# ============ VS Code ============
+.vscode/
+
+# ============ OS Files ============
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# ============ Logs ============
+*.log
+logs/
+log/
+
+# ============ Spring Boot ============
+spring-shell.log
+
+# ============ Docker ============
+docker-compose.override.yml
+
+# ============ Environment & Secrets ============
+.env
+.env.*
+*.env
+application-local.yml
+application-secret.yml
+**/src/main/resources/application-prod.yml
+
+# ============ Database ============
+*.db
+*.sqlite
+
+# ============ Test ============
+/test-output/
+
+# ============ Kafka ============
+kafka-logs/
+zookeeper-data/
+
+# ============ OAuth & Keys ============
+*.jks
+*.p12
+*.key
+*.pem

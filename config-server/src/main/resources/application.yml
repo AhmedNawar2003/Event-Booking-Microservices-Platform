@@ -1,0 +1,31 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: config-server
+  profiles:
+    active: native
+  cloud:
+    config:
+      server:
+        native:
+          # This looks for your .yml or .properties files inside src/main/resources/configs
+          search-locations: classpath:/configs
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,info,prometheus"
+  endpoint:
+    health:
+      show-details: always
+  # Adding the safety switch in case tracing dependencies are present
+  tracing:
+    sampling:
+      probability: 0.0
+  zipkin:
+    tracing:
+      export:
+        enabled: false
